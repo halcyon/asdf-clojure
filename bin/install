@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
-. ${PWD}/versions
+
+. $(dirname ${0})/versions
 
 installer() {
   local tmp_download_dir=$(mktemp -d -t clojure_XXXXXXX)
