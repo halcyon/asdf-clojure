@@ -1,0 +1,43 @@
+#!/usr/bin/env bash
+. ./versions
+
+installer() {
+  local tmp_download_dir=$(mktemp -d -t clojure_XXXXXXX)
+  local installer_path=$(echo ${tmp_download_dir}/$(basename ${versions[$ASDF_INSTALL_VERSION]}))
+
+  if ! which java >/dev/null
+  then
+    echo "Java is required. It can be installed using the asdf java plugin."
+    exit 1
+  fi
+
+  if [ "${ASDF_INSTALL_TYPE}" != "version" ]
+  then
+    echo "The asdf-clojure plugin only supports official binary releases from the clojure team."
+    exit 1
+  fi
+
+  (
+      set -e
+      curl -Lo ${installer_path} ${versions[$ASDF_INSTALL_VERSION]}
+      tar zxvf ${installer_path} -C ${tmp_download_dir}
+      cd ${tmp_download_dir}/clojure-tools
+      grep -v ruby install.sh > install-without-ruby.sh
+      chmod u+x install-without-ruby.sh
+      sed -i "s|PREFIX|${ASDF_INSTALL_PATH}|" clojure
+      mkdir -p ${ASDF_INSTALL_PATH}
+      ./install-without-ruby.sh ${ASDF_INSTALL_PATH}
+  ) || (rm -rf ${ASDF_INSTALL_PATH}; exit 1)
+
+  echo
+  echo "Clojure $ASDF_INSTALL_VERSION has been installed. Activate globally with:"
+  echo
+  echo "    asdf global clojure $ASDF_INSTALL_VERSION"
+  echo
+  echo "Activate locally in the current folder with:"
+  echo
+  echo "    asdf local clojure $ASDF_INSTALL_VERSION"
+  echo
+}
+
+installer
