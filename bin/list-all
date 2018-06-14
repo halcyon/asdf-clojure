@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
 
-. ./versions
+. ${PWD}/versions
 
 echo "${!versions[@]}"
