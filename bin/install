@@ -1,10 +1,9 @@
 #!/usr/bin/env bash
 
-. $(dirname ${0})/versions
-
 installer() {
   local tmp_download_dir=$(mktemp -d -t clojure_XXXXXXX)
-  local installer_path=$(echo ${tmp_download_dir}/$(basename ${versions[$ASDF_INSTALL_VERSION]}))
+  local url=$(awk -v version="$ASDF_INSTALL_VERSION" '$1 == ~version { print $2 }' $(dirname ${0})/versions)
+  local installer_path=$(echo ${tmp_download_dir}/$(basename ${url}))
 
   if ! which java >/dev/null
   then
@@ -20,7 +19,7 @@ installer() {
 
   (
       set -e
-      curl -Lo ${installer_path} ${versions[$ASDF_INSTALL_VERSION]}
+      curl -Lo ${installer_path} ${url}
       tar zxvf ${installer_path} -C ${tmp_download_dir}
       cd ${tmp_download_dir}/clojure-tools
       grep -v ruby install.sh > install-without-ruby.sh

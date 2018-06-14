@@ -1,3 +1,2 @@
-#!/usr/bin/env bash
-
-declare -A versions=(["1.9.0"]="https://download.clojure.org/install/clojure-tools-1.9.0.381.tar.gz")
+1.9.0 https://download.clojure.org/install/clojure-tools-1.9.0.381.tar.gz
+1.10.0 https://foogle.com
