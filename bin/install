@@ -24,7 +24,7 @@ installer() {
       cd ${tmp_download_dir}/clojure-tools
       grep -v ruby install.sh > install-without-ruby.sh
       chmod u+x install-without-ruby.sh
-      sed -i "s|PREFIX|${ASDF_INSTALL_PATH}|" clojure
+      sed -i'' -e "s|PREFIX|${ASDF_INSTALL_PATH}|" clojure
       mkdir -p ${ASDF_INSTALL_PATH}
       ./install-without-ruby.sh ${ASDF_INSTALL_PATH}
   ) || (rm -rf ${ASDF_INSTALL_PATH}; exit 1)
