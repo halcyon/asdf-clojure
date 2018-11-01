@@ -1,5 +1,6 @@
 language: java
-script: asdf plugin-test clojure https://github.com/${TRAVIS_REPO_SLUG}
+script:
+  - asdf plugin-test clojure $TRAVIS_BUILD_DIR clojure -e '(clojure-version)'
 before_script:
   - git clone https://github.com/asdf-vm/asdf.git
   - . asdf/asdf.sh
