@@ -22,7 +22,7 @@ installer() {
       curl -Lo ${installer_path} ${url}
       tar zxvf ${installer_path} -C ${tmp_download_dir}
       cd ${tmp_download_dir}/clojure-tools
-      grep -v ruby install.sh > install-without-ruby.sh
+      grep -v gsub install.sh > install-without-ruby.sh
       chmod u+x install-without-ruby.sh
       sed -i.bak "s|PREFIX|${ASDF_INSTALL_PATH}|" clojure
       mkdir -p ${ASDF_INSTALL_PATH}
