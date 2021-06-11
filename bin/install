@@ -2,7 +2,7 @@
 
 installer() {
   local tmp_download_dir=$(mktemp -d -t clojure_XXXXXXX)
-  local url=$(awk -v version="$ASDF_INSTALL_VERSION" '$1 == version { print $2 }' $(dirname ${0})/versions)
+  local url="https://download.clojure.org/install/clojure-tools-${ASDF_INSTALL_VERSION}.tar.gz"
   local installer_path=$(echo ${tmp_download_dir}/$(basename ${url}))
 
   if ! which java >/dev/null
@@ -25,6 +25,7 @@ installer() {
       grep -v gsub install.sh > install-without-ruby.sh
       chmod u+x install-without-ruby.sh
       sed -i.bak "s|PREFIX|${ASDF_INSTALL_PATH}|" clojure
+      sed -i.bak "s|BINDIR|${ASDF_INSTALL_PATH}/bin|" clj
       mkdir -p ${ASDF_INSTALL_PATH}
       ./install-without-ruby.sh ${ASDF_INSTALL_PATH}
   ) || (rm -rf ${ASDF_INSTALL_PATH}; exit 1)
