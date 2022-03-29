@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-LATEST_RELEASE="1.10.3"
+LATEST_RELEASE="1.11.0"
 curl -s https://raw.githubusercontent.com/clojure/brew-install/"${LATEST_RELEASE}"/CHANGELOG.md \
   | sed -En 's/\* \*\*([[:digit:]]+\.)([[:digit:]]+\.)([[:digit:]]+\.)([[:digit:]]+) on.*/\1\2\3\4/p' \
   | sort --version-sort \
