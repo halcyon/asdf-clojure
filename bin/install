@@ -11,9 +11,10 @@ installer() {
     exit 1
   fi
 
-  if [ "${ASDF_INSTALL_TYPE}" != "version" ]
+  if ! curl --output /dev/null --silent --head --fail "$url"
   then
-    echo "The asdf-clojure plugin only supports official binary releases from the clojure team."
+    echo "Clojure ${ASDF_INSTALL_VERSION} not found. The asdf-clojure plugin only supports official binary releases from the clojure team."
+    echo "Run 'asdf list-all clojure' to list official binary releases."
     exit 1
   fi
 
